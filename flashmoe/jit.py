@@ -269,11 +269,13 @@ def _get_compiled(arg: InitArgs, src: str, mod_prefix: str, mod_name: str):
         if so_path.exists():
             return _load_ext(mod_name, so_path)
 
+        arch = arg.gpu_arch // 10
+        arch_tag = f"{arch}a" if arch >= 90 else str(arch)
         subprocess.run([
             "cmake", "-S", str(cmake_source_dir), "-B", str(bdir), "-G", "Ninja",
             f"-DGENERATED_SRC={generated}",
             f"-DTARGET_MODULE_NAME={mod_name}",
-            f"-DCMAKE_CUDA_ARCHITECTURES={arg.gpu_arch // 10}",
+            f"-DCMAKE_CUDA_ARCHITECTURES={arch_tag}",
             f"-DCPM_SOURCE_CACHE={Path.home() / '.cache' / 'cpm'}",
             "-DCMAKE_BUILD_TYPE=Release",
             f"-DARCH={arg.gpu_arch // 10}"

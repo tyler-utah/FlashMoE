@@ -173,6 +173,9 @@ needed. C++ callers use `gate::forward` to launch both passes and
 different tile schedules. This policy does not promise bitwise determinism
 of distributed expert computation or floating-point combination.
 
+The Python JIT uses the checkout's native headers when present; packaged
+installs fetch the matching pinned native revision rather than older headers.
+
 ## Running a Python Program
 We suggest running these to verify that you meet all installation requirements.
 
